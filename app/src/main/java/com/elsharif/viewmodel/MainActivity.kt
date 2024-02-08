@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -19,11 +20,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.elsharif.viewmodel.ui.theme.ViewModelTheme
-import com.elsharif.viewmodel.viewmodel.ViewModel
+import com.elsharif.viewmodel.viewmodel.ContactsViewModel
 
 class MainActivity : ComponentActivity() {
 
+
+//    private val viewModel by viewModels<ContactsViewModel>()
+//    private val viewModel =ContactsViewModel()
+
+    /*
     private val viewModel by viewModels<ViewModel> (  )
 
     private val viewModelFactory by viewModels<ViewModel> (
@@ -37,16 +44,27 @@ class MainActivity : ComponentActivity() {
             }
         }
     )
+    */
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             ViewModelTheme {
-                // A surface container using the 'background' color from the theme
+              // we use this method if we will don't pass parameter to the constructor of viewModel
+                val viewModel= viewModel<ContactsViewModel>()
+
+
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    val text = viewModel.text.collectAsState()
+                    color = viewModel.backgroundColor
+                )
+                {
+
+                    Button(onClick = { viewModel.changeBackgroundColor() }) {
+                        Text(text = "Change Background")
+                    }
+                    
+                 /*   val text = viewModel.text.collectAsState()
 
                     Column(
                         modifier=Modifier.fillMaxSize(),
@@ -61,7 +79,7 @@ class MainActivity : ComponentActivity() {
 
                         TextField(value =text.value, onValueChange ={viewModel.changeText(it)} )
                     }
-
+                   */
 
 
                 }
